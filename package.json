@@ -42,7 +42,9 @@
     "lodash": "^4.17.20",
     "moleculer": "^0.14.10",
     "moleculer-axios": "^0.1.2",
+    "mongoose": "^6.2.1",
     "morgan": "~1.9.1",
+    "oso": "^0.26.0",
     "redlock": "^4.2.0",
     "tortoise": "^1.0.1"
   },

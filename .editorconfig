@@ -7,8 +7,8 @@ root = true
 [*]
 
 # Change these settings to your own preference
-indent_style = tab
-indent_size = 4
+indent_style = space
+indent_size = 2
 space_after_anon_function = true
 
 # We recommend you to keep these unchanged
@@ -32,4 +32,4 @@ indent_style = space
 indent_size = 2
 
 [*.js]
-quote_type = "double"
+quote_type = "single"
