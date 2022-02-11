@@ -1,4 +1,6 @@
-const { Oso } = require('oso');
+const { extendWith } = require('lodash');
+const { Oso, NotFoundError } = require('oso');
+const { isConstructor } = require('oso/dist/src/helpers');
 const { User } = require('../resources/index');
 
 class BaseAuthorizer {
@@ -36,7 +38,25 @@ class BaseAuthorizer {
     console.log('OSO actor: ', actor);
     console.log('OSO action: ', scheme.action);
     console.log('OSO resource: ', resource);
-    return this.oso.authorize(actor, scheme.action, resource);
+    if (Array.isArray(scheme.action)) {
+      let result;
+      for (const action of scheme.action) {
+        try {
+          console.log('Test action', action);
+          result = await this.oso.authorize(actor, action.toLowerCase(), resource);
+          break;
+        } catch (error) {
+          result = error;
+        }
+      }
+      if (result instanceof NotFoundError) {
+        throw result;
+      } else {
+        return result;
+      }
+    } else {
+      return this.oso.authorize(actor, scheme.action.toLowerCase(), resource);
+    }
   }
 }
 

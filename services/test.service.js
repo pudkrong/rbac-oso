@@ -16,7 +16,7 @@ module.exports = {
     secureChannel: {
       permissions: {
         resourceType: 'channel',
-        action: Permissions.ChannelV3.EditChannel
+        action: [Permissions.ChannelV3.AddChannelUser, Permissions.ChannelV3.EditChannel]
       },
       async handler (ctx) {
         // Check whether user is banned in the channel

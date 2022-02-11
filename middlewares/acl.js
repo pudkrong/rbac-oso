@@ -11,7 +11,6 @@ class ACL {
     const authorizer = resources[permissionScheme.resourceType];
     if (!authorizer) throw new Error(`Cannot find authorizer for ${permissionScheme.resourceType}`);
 
-    permissionScheme.action = permissionScheme.action.toLowerCase();
     return authorizer.authorize(actor, permissionScheme, ctx);
   }
 
@@ -24,6 +23,7 @@ class ACL {
     await this.authorize(actor, permissionScheme, ctx);
   }
 
+  // TONOTE::PUD This should be in the business logic or just separate endpoint for admin
   checkRestrictedParams (permissionScheme, ctx) {
     // allow only super admin to pass this params
     if (permissionScheme.restrictedParams && permissionScheme.restrictedParams.length > 0) {
@@ -32,12 +32,6 @@ class ACL {
       );
 
       if (restrictedKey) throw new Error(`You are not allowed to put ${restrictedKey} in params`);
-    }
-  }
-
-  isCreator (currentUserId, resource) {
-    if (resource && resource.userId && resource.userId.toString() === currentUserId.toString()) {
-      return true;
     }
   }
 
