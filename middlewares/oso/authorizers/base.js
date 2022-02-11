@@ -39,21 +39,10 @@ class BaseAuthorizer {
     console.log('OSO action: ', scheme.action);
     console.log('OSO resource: ', resource);
     if (Array.isArray(scheme.action)) {
-      let result;
-      for (const action of scheme.action) {
-        try {
-          console.log('Test action', action);
-          result = await this.oso.authorize(actor, action.toLowerCase(), resource);
-          break;
-        } catch (error) {
-          result = error;
-        }
-      }
-      if (result instanceof NotFoundError) {
-        throw result;
-      } else {
-        return result;
-      }
+      const promises = scheme.action.map(_ => this.oso.authorize(actor, _.toLowerCase(), resource));
+      return Promise.any(promises).catch((aggErrors) => {
+        throw aggErrors.errors[0];
+      });
     } else {
       return this.oso.authorize(actor, scheme.action.toLowerCase(), resource);
     }
