@@ -37,7 +37,7 @@
     "express": "~4.16.1",
     "hbs": "~4.1.2",
     "http-errors": "~1.6.3",
-    "ioredis": "^4.27.8",
+    "ioredis": "^4.28.5",
     "json-rules-engine": "^5.0.4",
     "lodash": "^4.17.21",
     "moleculer": "^0.14.10",
